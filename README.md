@@ -8,7 +8,7 @@ The experience is a guided camera tour through a 3D model of the network. The
 audience first sees the whole architecture, then flies to each stage for a
 concrete visual explanation.
 
-[![Watch the companion animation](brag-output/brag.jpg)](brag-output/brag.mp4)
+https://github.com/user-attachments/assets/54814d3d-0067-4288-bab2-34235d5ad8d4
 
 ▶️ [Watch a short companion animation](brag-output/brag.mp4), a stylized visualization based on the 3D scene (not a recording of the app itself).
 
