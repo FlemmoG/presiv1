@@ -7,9 +7,7 @@ The experience is a guided camera tour through a 3D model of the network: first
 the whole architecture, then a flight to each stage for a concrete visual
 explanation.
 
-[![Watch the demo](brag-output/brag.jpg)](brag-output/brag.mp4)
-
-▶️ [Watch the demo](brag-output/brag.mp4), a recording of the running app.
+https://github.com/user-attachments/assets/68420d2f-e8e9-42b8-9847-a8cf7387dc33
 
 > **Nothing here is a trained model.** There is no inference and no real
 > weights. Every feature map, activation grid and probability is a hand-designed
