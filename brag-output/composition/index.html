@@ -6,422 +6,83 @@
     <title>AlexNet Brag</title>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.14.2/dist/gsap.min.js"></script>
     <style>
-      html, body { margin: 0; padding: 0; background: #070a12; }
-      body { color: #e9eef7; font-family: system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+      body { margin: 0; background: #070a12; color: #e9eef7; font-family: system-ui, sans-serif; }
       #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #070a12; }
-      .clip { position: absolute; inset: 0; }
-      .in { position: absolute; inset: 0; opacity: 0; }
-      .abs { position: absolute; }
-      .vignette { position: absolute; inset: 0; z-index: 0; pointer-events: none;
-        background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 38%, rgba(3,5,10,0.72) 100%); }
-      #chrome { position: absolute; left: 60px; top: 44px; z-index: 6; opacity: 0; }
-      #chrome .t { font-size: 26px; font-weight: 600; letter-spacing: 0.01em; }
-      #chrome .s { margin-top: 6px; font-size: 18px; color: #9aa8bd; }
-      .step { position: absolute; right: 60px; top: 48px; font-size: 22px; color: #9aa8bd; text-align: right; letter-spacing: 0.02em; }
-      .step b { color: #e9eef7; font-weight: 600; }
-      .cap { position: absolute; left: 260px; width: 1400px; bottom: 100px; text-align: center; font-size: 38px; line-height: 1.35; font-weight: 300; color: #e9eef7; letter-spacing: 0.01em; }
-      .badge { position: absolute; font-size: 20px; color: #9aa8bd; border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 6px 16px; background: rgba(12,17,28,0.86); white-space: nowrap; }
-      .chip { position: absolute; font-size: 24px; color: #e9eef7; border-radius: 10px; padding: 8px 18px; white-space: nowrap; background: rgba(12,17,28,0.86); }
-      .lbl { position: absolute; font-size: 20px; text-align: center; white-space: nowrap; }
-      .cell { position: absolute; box-sizing: border-box; }
-      .num { position: absolute; text-align: center; color: #e9eef7; }
-      .glow { position: absolute; inset: -14px; filter: blur(22px); opacity: 0.12; border-radius: 12px; }
+      video.clip { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; }
+      .cap { position: absolute; left: 0; width: 1500px; top: 64px; display: flex; flex-direction: column; align-items: center; text-align: center; opacity: 0; }
+      .cap .kick { font-size: 24px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 700; margin-bottom: 14px; }
+      .cap .line { font-size: 60px; font-weight: 650; line-height: 1.08; letter-spacing: -0.01em; color: #fff; text-shadow: 0 4px 40px rgba(3,5,10,0.95), 0 0 6px rgba(3,5,10,0.9); }
+      .cap .line b { font-weight: 750; }
+      .conv { color: #7cc0ff; } .pool { color: #5df0ae; } .dense { color: #ffb066; } .out { color: #c9a0ff; }
+      #veil { position: absolute; inset: 0; background: #070a12; opacity: 0; }
+      #outro { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #070a12; opacity: 0; }
+      #outro .name { font-size: 150px; font-weight: 750; letter-spacing: -0.03em; }
+      #outro .sub { font-size: 40px; color: #9aa8bd; margin-top: 10px; }
+      #outro .note { font-size: 30px; color: #b8c4d8; margin-top: 56px; max-width: 1200px; text-align: center; line-height: 1.35; }
+      #outro .bar { display: flex; gap: 14px; margin-top: 34px; }
+      #outro .bar i { display: block; width: 90px; height: 8px; border-radius: 4px; }
     </style>
   </head>
   <body>
-    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="48">
-      <div class="vignette"></div>
-      <div id="chrome"><div class="t">AlexNet: A Guided Journey</div><div class="s">Through the Architecture</div></div>
+    <div id="root" data-composition-id="main" data-start="0" data-width="1920" data-height="1080" data-duration="24.8">
+      <video id="v1" class="clip" src="assets/video/s1.mp4" data-start="0" data-duration="3.6" data-track-index="0" muted playsinline></video>
+      <video id="v2" class="clip" src="assets/video/s2.mp4" data-start="3.6" data-duration="5.14" data-track-index="0" muted playsinline></video>
+      <video id="v3" class="clip" src="assets/video/s3.mp4" data-start="8.74" data-duration="4.37" data-track-index="0" muted playsinline></video>
+      <video id="v4" class="clip" src="assets/video/s4.mp4" data-start="13.11" data-duration="4.36" data-track-index="0" muted playsinline></video>
+      <video id="v5" class="clip" src="assets/video/s5.mp4" data-start="17.47" data-duration="4.9" data-track-index="0" muted playsinline></video>
 
-      <section id="s1" class="clip" data-start="0" data-duration="6.5"><div class="in" id="s1in"></div></section>
-      <section id="s2" class="clip" data-start="6" data-duration="7.5"><div class="in" id="s2in"></div></section>
-      <section id="s3" class="clip" data-start="13" data-duration="8.5"><div class="in" id="s3in"></div></section>
-      <section id="s4" class="clip" data-start="21" data-duration="7.5"><div class="in" id="s4in"></div></section>
-      <section id="s5" class="clip" data-start="28" data-duration="6.5"><div class="in" id="s5in"></div></section>
-      <section id="s6" class="clip" data-start="34" data-duration="7.5"><div class="in" id="s6in"></div></section>
-      <section id="s7" class="clip" data-start="41" data-duration="7"><div class="in" id="s7in"></div></section>
+      <div id="veil"></div>
 
-      <audio id="music" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3" data-start="0" data-duration="48" data-track-index="0" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":1.5,"v":0.3},{"t":34,"v":0.3},{"t":36,"v":0.4},{"t":41,"v":0.35},{"t":47.8,"v":0}]}]}'></audio>
-      <audio id="sfx0" src="assets/sfx/rollover2.ogg" data-start="2.3" data-duration="1" data-track-index="1" data-volume="0.45"></audio>
-      <audio id="sfx1" src="assets/sfx/click_003.ogg" data-start="6.4" data-duration="1" data-track-index="2" data-volume="0.3"></audio>
-      <audio id="sfx2" src="assets/sfx/click_003.ogg" data-start="6.95" data-duration="1" data-track-index="3" data-volume="0.3"></audio>
-      <audio id="sfx3" src="assets/sfx/click_003.ogg" data-start="7.49" data-duration="1" data-track-index="4" data-volume="0.3"></audio>
-      <audio id="sfx4" src="assets/sfx/click_003.ogg" data-start="8.04" data-duration="1" data-track-index="5" data-volume="0.3"></audio>
-      <audio id="sfx5" src="assets/sfx/click_003.ogg" data-start="8.58" data-duration="1" data-track-index="6" data-volume="0.3"></audio>
-      <audio id="sfx6" src="assets/sfx/click_003.ogg" data-start="9.13" data-duration="1" data-track-index="7" data-volume="0.3"></audio>
-      <audio id="sfx7" src="assets/sfx/click_003.ogg" data-start="9.67" data-duration="1" data-track-index="8" data-volume="0.3"></audio>
-      <audio id="sfx8" src="assets/sfx/bong_001.ogg" data-start="8.74" data-duration="1" data-track-index="9" data-volume="0.35"></audio>
-      <audio id="sfx9" src="assets/sfx/click_002.ogg" data-start="13.9" data-duration="1" data-track-index="10" data-volume="0.3"></audio>
-      <audio id="sfx10" src="assets/sfx/click_002.ogg" data-start="14.6" data-duration="1" data-track-index="11" data-volume="0.3"></audio>
-      <audio id="sfx11" src="assets/sfx/click_002.ogg" data-start="15.3" data-duration="1" data-track-index="12" data-volume="0.3"></audio>
-      <audio id="sfx12" src="assets/sfx/click_002.ogg" data-start="16.0" data-duration="1" data-track-index="13" data-volume="0.3"></audio>
-      <audio id="sfx13" src="assets/sfx/click_002.ogg" data-start="16.7" data-duration="1" data-track-index="14" data-volume="0.3"></audio>
-      <audio id="sfx14" src="assets/sfx/rollover2.ogg" data-start="17.6" data-duration="1" data-track-index="15" data-volume="0.35"></audio>
-      <audio id="sfx15" src="assets/sfx/click_003.ogg" data-start="22.0" data-duration="1" data-track-index="16" data-volume="0.35"></audio>
-      <audio id="sfx16" src="assets/sfx/click_003.ogg" data-start="23.2" data-duration="1" data-track-index="17" data-volume="0.35"></audio>
-      <audio id="sfx17" src="assets/sfx/click_003.ogg" data-start="24.4" data-duration="1" data-track-index="18" data-volume="0.35"></audio>
-      <audio id="sfx18" src="assets/sfx/click_003.ogg" data-start="25.6" data-duration="1" data-track-index="19" data-volume="0.35"></audio>
-      <audio id="sfx19" src="assets/sfx/rollover2.ogg" data-start="28.5" data-duration="1" data-track-index="20" data-volume="0.3"></audio>
-      <audio id="sfx20" src="assets/sfx/rollover2.ogg" data-start="29.5" data-duration="1" data-track-index="21" data-volume="0.3"></audio>
-      <audio id="sfx21" src="assets/sfx/rollover2.ogg" data-start="30.5" data-duration="1" data-track-index="22" data-volume="0.3"></audio>
-      <audio id="sfx22" src="assets/sfx/bong_001.ogg" data-start="36.57" data-duration="1" data-track-index="23" data-volume="0.5"></audio>
-      <audio id="sfx23" src="assets/sfx/click_002.ogg" data-start="36.84" data-duration="1" data-track-index="24" data-volume="0.22"></audio>
-      <audio id="sfx24" src="assets/sfx/click_002.ogg" data-start="37.11" data-duration="1" data-track-index="25" data-volume="0.22"></audio>
-      <audio id="sfx25" src="assets/sfx/click_002.ogg" data-start="37.38" data-duration="1" data-track-index="26" data-volume="0.22"></audio>
-      <audio id="sfx26" src="assets/sfx/click_002.ogg" data-start="37.65" data-duration="1" data-track-index="27" data-volume="0.22"></audio>
-      <audio id="sfx27" src="assets/sfx/click_002.ogg" data-start="37.92" data-duration="1" data-track-index="28" data-volume="0.22"></audio>
-      <audio id="sfx28" src="assets/sfx/impactSoft_medium_001.ogg" data-start="44.0" data-duration="1" data-track-index="29" data-volume="0.3"></audio>
+      <div id="c1" class="cap"><span class="kick conv">AlexNet · the real 3D scene</span><span class="line">Fly through a neural network.</span></div>
+      <div id="c2" class="cap"><span class="kick conv">Step 1 · Input</span><span class="line">It never sees “dog.”<br />It sees <b>numbers</b>.</span></div>
+      <div id="c3" class="cap"><span class="kick conv">Step 2 · Conv1</span><span class="line">One 11×11 filter<br />scans for a pattern.</span></div>
+      <div id="c4" class="cap"><span class="kick pool">Step 4 · Pooling</span><span class="line">Keep only the <b>strongest</b> response.</span></div>
+      <div id="c5" class="cap"><span class="kick out">Step 7 · Classification</span><span class="line">Out comes a verdict: <b>dog 0.72</b></span></div>
 
+      <div id="outro">
+        <div class="name" id="o-name">AlexNet</div>
+        <div class="sub" id="o-sub">A Guided Journey Through the Architecture</div>
+        <div class="bar" id="o-bar"><i style="background:#4ea8ff"></i><i style="background:#3ddc97"></i><i style="background:#ff9f45"></i><i style="background:#b57bff"></i></div>
+        <div class="note" id="o-note">Nothing here is a trained model.<br />Every number is there to make the mechanism legible.</div>
+      </div>
+
+      <audio id="music" src="assets/music/happy-beats-business-moves-vol-12-by-ende-dot-app.mp3" data-start="0" data-duration="24.8" data-track-index="1" data-automation='{"version":1,"lanes":[{"target":"volume","points":[{"t":0,"v":0},{"t":1.2,"v":0.32},{"t":21,"v":0.34},{"t":24.8,"v":0}]}]}'></audio>
+      <audio id="sfx1" src="assets/sfx/rollover2.ogg" data-start="0.7" data-duration="0.05" data-track-index="2" data-volume="0.5"></audio>
+      <audio id="sfx2" src="assets/sfx/switch10.ogg" data-start="3.45" data-duration="0.36" data-track-index="3" data-volume="0.45"></audio>
+      <audio id="sfx3" src="assets/sfx/switch10.ogg" data-start="8.6" data-duration="0.36" data-track-index="4" data-volume="0.5"></audio>
+      <audio id="sfx4" src="assets/sfx/switch10.ogg" data-start="12.97" data-duration="0.36" data-track-index="5" data-volume="0.5"></audio>
+      <audio id="sfx5" src="assets/sfx/switch10.ogg" data-start="17.33" data-duration="0.36" data-track-index="6" data-volume="0.5"></audio>
+      <audio id="sfx6" src="assets/sfx/click2.ogg" data-start="19.0" data-duration="0.05" data-track-index="7" data-volume="0.45"></audio>
+      <audio id="sfx7" src="assets/sfx/impactSoft_medium_001.ogg" data-start="22.93" data-duration="0.18" data-track-index="8" data-volume="0.6"></audio>
     </div>
-
     <script>
       const tl = gsap.timeline({ paused: true });
-      const mk = (parent, cls, css, html) => {
-        const e = document.createElement("div");
-        if (cls) e.className = cls;
-        if (css) e.style.cssText = css;
-        if (html != null) e.innerHTML = html;
-        parent.appendChild(e);
-        return e;
-      };
-      const rgba = (hex, a) => {
-        const n = parseInt(hex.slice(1), 16);
-        return `rgba(${n >> 16},${(n >> 8) & 255},${n & 255},${a})`;
-      };
-      let OFF = 0;
-      const T = {
-        fromTo: (e, a, b, t) => tl.fromTo(e, a, b, t + OFF),
-        to: (e, v, t) => tl.to(e, v, t + OFF),
-        set: (e, v, t) => tl.set(e, v, t + OFF),
-      };
-      const show = (el, t, d = 0.6, y = 14) =>
-        tl.fromTo(el, { opacity: 0, y }, { opacity: 1, y: 0, duration: d, ease: "power2.out" }, t + OFF);
-      const hide = (el, t, d = 0.5) => tl.to(el, { opacity: 0, duration: d, ease: "power1.inOut" }, t + OFF);
-      const hash = (x, y, s = 0) => { const n = Math.sin(x * 127.1 + y * 311.7 + s * 74.7) * 43758.5453; return n - Math.floor(n); };
-      const clamp = (v) => Math.min(1, Math.max(0, v));
+      // caption in/out helper: fast in (0.45s), hold, soft out (0.4s)
+      function cap(id, inAt, outAt) {
+        tl.fromTo("#" + id, { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, inAt);
+        tl.to("#" + id, { opacity: 0, y: -12, duration: 0.4, ease: "power2.in" }, outAt);
+      }
+      cap("c1", 0.4, 3.1);
+      cap("c2", 4.3, 8.3);   // beat-grid: lands after cut at 3.6
+      cap("c3", 9.1, 12.7);  // beat-locked cut: 8.74s
+      cap("c4", 13.5, 17.0); // beat-locked cut: 13.11s
+      cap("c5", 17.9, 21.9); // beat-locked cut: 17.47s
 
-      const C = { conv: "#4ea8ff", pool: "#3ddc97", dense: "#ff9f45", out: "#b57bff", soft: "#7f8da3", input: "#8fa6c4", ink: "#e9eef7", dim: "#9aa8bd" };
+      // hook: slow push toward the model band in the overview shot
+      tl.fromTo("#v1", { scale: 1.0, transformOrigin: "50% 48%" }, { scale: 1.2, duration: 3.6, ease: "power1.inOut" }, 0);
 
-      // scene wrappers: fade in at start, out at end (overlap = crossfade)
-      const S = [
-        { id: "s1in", t: 0, d: 6.5 }, { id: "s2in", t: 6, d: 7.5 }, { id: "s3in", t: 13, d: 8.5 },
-        { id: "s4in", t: 21, d: 7.5 }, { id: "s5in", t: 28, d: 6.5 }, { id: "s6in", t: 34, d: 7.5 }, { id: "s7in", t: 41, d: 7 },
-      ];
-      S.forEach((s, i) => {
-        tl.fromTo("#" + s.id, { opacity: 0 }, { opacity: 1, duration: i === 0 ? 0.8 : 0.6, ease: "power1.inOut" }, s.t);
-        if (i < S.length - 1) tl.to("#" + s.id, { opacity: 0, duration: 0.5, ease: "power1.inOut" }, s.t + s.d - 0.5);
+      // polished dip-to-ink at each cut, peak on the beat
+      [[3.6], [8.74], [13.11], [17.47]].forEach(([t]) => {
+        tl.fromTo("#veil", { opacity: 0 }, { opacity: 0.85, duration: 0.18, ease: "power2.in" }, t - 0.18);
+        tl.to("#veil", { opacity: 0, duration: 0.45, ease: "power2.out" }, t);
       });
-      tl.to("#s7in", { opacity: 0, duration: 0.5 }, 47.5);
 
-      // persistent title chrome across the tour scenes
-      tl.fromTo("#chrome", { opacity: 0 }, { opacity: 1, duration: 0.6 }, 6.4);
-      tl.to("#chrome", { opacity: 0, duration: 0.5 }, 40.5);
-
-      const stepEl = (parent, html, t) => {
-        const e = mk(parent, "step", null, html);
-        show(e, t, 0.5, -8);
-      };
-      const caption = (parent, text, t, t2) => {
-        const e = mk(parent, "cap", null, text);
-        show(e, t, 0.7, 12);
-        if (t2 != null) hide(e, t2, 0.4);
-        return e;
-      };
-
-      /* ---------------- Scene 1: the hook ---------------- */
-      (() => {
-        const p = document.getElementById("s1in"); OFF = 0;
-        const l1 = mk(p, "abs", "left:120px;top:330px;width:800px;font-size:60px;line-height:1.2;font-weight:300;", "The model never receives the concept “dog.”");
-        const l2 = mk(p, "abs", "left:120px;top:590px;width:800px;font-size:60px;font-weight:300;color:" + C.conv + ";", "It receives numbers.");
-        show(l1, 0.6, 0.9, 14);
-        show(l2, 3.2, 0.8, 14);
-
-        // conceptual dog image on an 8x8 grid (illustration, not real data)
-        const N = 8, CELL = 84, GX = 1010, GY = 190;
-        const inDog = (x, y) => {
-          const e = (cx, cy, rx, ry) => ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1;
-          return e(4.6, 5.0, 2.6, 1.35) || e(2.0, 3.3, 1.25, 1.2) || e(0.95, 3.7, 0.65, 0.5) || e(2.5, 2.1, 0.45, 0.7) ||
-            (x > 3.0 && x < 3.7 && y > 5.5 && y < 7.5) || (x > 5.7 && x < 6.4 && y > 5.5 && y < 7.5) || (x > 7.0 && x < 7.9 && y > 3.6 && y < 4.4);
-        };
-        const svg = mk(p, "abs", `left:${GX}px;top:${GY}px;width:${N * CELL}px;height:${N * CELL}px;border-radius:6px;overflow:hidden;`,
-          `<svg width="${N * CELL}" height="${N * CELL}" viewBox="0 0 8 8"><defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3f6f98"/><stop offset="1" stop-color="#2c4a66"/></linearGradient></defs>
-          <rect width="8" height="8" fill="url(#bg1)"/>
-          <ellipse cx="4.6" cy="5" rx="2.6" ry="1.35" fill="#c4925a"/><circle cx="2" cy="3.3" r="1.25" fill="#c4925a"/><ellipse cx="0.95" cy="3.7" rx="0.65" ry="0.5" fill="#a8763f"/>
-          <ellipse cx="2.5" cy="2.1" rx="0.45" ry="0.7" fill="#8a5c30"/><rect x="3" y="5.5" width="0.7" height="2" rx="0.3" fill="#c4925a"/><rect x="5.7" y="5.5" width="0.7" height="2" rx="0.3" fill="#c4925a"/>
-          <rect x="7" y="3.6" width="0.9" height="0.8" rx="0.35" fill="#c4925a"/></svg>`);
-        show(svg, 0.9, 1.0, 0);
-        T.to(svg, { opacity: 0, duration: 0.9, ease: "power1.inOut" }, 2.4);
-
-        const cells = [];
-        for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-          const d = inDog(x + 0.5, y + 0.5);
-          const g = hash(x, y, 5) * 26 - 13;
-          const rgb = d ? [196 + g, 146 + g, 90 + g] : [60 + g * 0.5, 96 + g * 0.5, 126 + g * 0.5];
-          const c = mk(p, "cell", `left:${GX + x * CELL}px;top:${GY + y * CELL}px;width:${CELL}px;height:${CELL}px;background:rgb(${rgb.map((v) => Math.round(v)).join(",")});border:1px solid rgba(7,10,18,0.5);`);
-          const n = mk(c, "num", `left:0;top:0;width:${CELL}px;height:${CELL}px;line-height:${CELL}px;font-size:24px;background:rgba(7,10,18,0.72);`, Math.round(rgb[0]));
-          cells.push({ c, n, k: x + y });
-        }
-        cells.forEach(({ c, n, k }) => {
-          T.fromTo(c, { opacity: 0 }, { opacity: 1, duration: 0.35, ease: "power1.out" }, 2.4 + k * 0.07);
-          T.fromTo(n, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power1.out" }, 2.9 + k * 0.07);
-        });
-        const b = mk(p, "badge", `left:${GX}px;top:${GY + N * CELL + 24}px;`, "Conceptual close-up · an 8 × 8 corner of 224 × 224 × 3 values");
-        show(b, 3.4, 0.6, 8);
-      })();
-
-      /* ---------------- Scene 2: whole architecture ---------------- */
-      const glowSel = [];
-      (() => {
-        const p = document.getElementById("s2in"); OFF = 6;
-        stepEl(p, "<b>Overview</b> · the whole architecture", 0.5);
-        const legend = [[C.conv, "Convolutional processing"], [C.pool, "Pooling"], [C.dense, "Dense / fully connected"], [C.soft, "Softmax (not a learned layer)"], [C.out, "Classification output"]];
-        legend.forEach(([col, txt], i) => {
-          const r = mk(p, "abs", `right:60px;top:${104 + i * 30}px;font-size:18px;color:#9aa8bd;white-space:nowrap;`, `${txt} <span style="display:inline-block;width:12px;height:12px;border-radius:3px;margin-left:10px;background:${col}"></span>`);
-          show(r, 0.9 + i * 0.1, 0.5, 6);
-        });
-        const L = [
-          ["Input", "224×224×3", C.input, 26, 190], ["Conv1", "55×55×96", C.conv, 40, 170], ["Pool1", "27×27×96", C.pool, 40, 120],
-          ["Conv2", "27×27×256", C.conv, 58, 130], ["Pool2", "13×13×256", C.pool, 58, 90], ["Conv3", "13×13×384", C.conv, 70, 90],
-          ["Conv4", "13×13×384", C.conv, 70, 90], ["Conv5", "13×13×256", C.conv, 58, 90], ["Pool5", "6×6×256", C.pool, 58, 64],
-          ["FC6", "4,096", C.dense, 24, 300], ["FC7", "4,096", C.dense, 24, 300], ["FC8", "1,000", C.dense, 24, 200],
-          ["Softmax", "σ", C.soft, 60, 60], ["Output", "1,000 probs", C.out, 26, 200],
-        ];
-        const cx = (i) => 120 + 60 + i * 120;
-        L.forEach(([name, shape, col, w, h], i) => {
-          const t0 = 0.45 + i * 0.2727;
-          const blk = mk(p, "abs", `left:${cx(i) - w / 2}px;top:${540 - h / 2}px;width:${w}px;height:${h}px;`);
-          const gl = mk(blk, "glow", `background:${col};`);
-          glowSel.push(gl);
-          const face = mk(blk, "abs", `inset:0;border:2px solid ${col};background:${rgba(col, 0.16)};border-radius:5px;box-shadow:10px -10px 0 ${rgba(col, 0.16)},20px -20px 0 ${rgba(col, 0.08)};`);
-          if (name === "Softmax") face.innerHTML = `<div style="text-align:center;line-height:${h - 4}px;font-size:34px;color:${C.ink}">σ</div>`;
-          const l1 = mk(p, "lbl", `left:${cx(i) - 60}px;width:120px;top:710px;color:${col};font-weight:600;`, name);
-          const l2 = mk(p, "lbl", `left:${cx(i) - 60}px;width:120px;top:742px;font-size:17px;color:#9aa8bd;`, name === "Softmax" ? "not a learned layer" : shape);
-          if (name === "Softmax") l2.style.whiteSpace = "normal";
-          [blk, l1, l2].forEach((e) => show(e, t0, 0.5, 18));
-        });
-        const brace = (i0, i1, txt, col, t) => {
-          const x0 = cx(i0) - 55, x1 = cx(i1) + 55;
-          const ln = mk(p, "abs", `left:${x0}px;width:${x1 - x0}px;top:296px;height:3px;background:${col};border-radius:2px;`);
-          const tx = mk(p, "abs", `left:${x0}px;width:${x1 - x0}px;top:250px;text-align:center;font-size:24px;color:${col};`, txt);
-          show(ln, t, 0.6, 0); show(tx, t, 0.6, 8);
-        };
-        brace(1, 8, "Five convolutional layers", C.conv, 3.6);
-        brace(9, 11, "Three fully connected layers", C.dense, 3.9);
-        caption(p, "AlexNet contains five convolutional layers followed by three fully connected layers.", 2.74);
-      })();
-
-      /* ---------------- Scene 3: one filter, one feature map ---------------- */
-      (() => {
-        const p = document.getElementById("s3in"); OFF = 13;
-        stepEl(p, "<b>Step 2 of 7</b> · Conv1 and the 11 × 11 filter", 0.4);
-        const N = 27, CS = 20, PX = 180, PY = 190;
-        const patch = [];
-        for (let y = 0; y < N; y++) { const row = []; for (let x = 0; x < N; x++) {
-          const t = (x - y) / N, edge = 1 / (1 + Math.exp(-t * 7)), gr = (hash(x, y, 3) - 0.5) * 0.14;
-          const r = clamp(0.22 + edge * 0.68 + gr), g = clamp(0.30 + edge * 0.34 + gr), b = clamp(0.68 - edge * 0.5 + gr);
-          row.push({ r, g, b, lum: 0.299 * r + 0.587 * g + 0.114 * b }); } patch.push(row); }
-        const grid = mk(p, "abs", `left:${PX}px;top:${PY}px;width:${N * CS}px;height:${N * CS}px;`);
-        for (let y = 0; y < N; y++) for (let x = 0; x < N; x++) {
-          const c = patch[y][x];
-          mk(grid, "cell", `left:${x * CS}px;top:${y * CS}px;width:${CS}px;height:${CS}px;background:rgb(${Math.round(c.r * 255)},${Math.round(c.g * 255)},${Math.round(c.b * 255)});`);
-        }
-        show(grid, 0.3, 0.8, 0);
-        const bd = mk(p, "badge", `left:${PX}px;top:${PY - 50}px;`, "Conceptual close-up · a 27 × 27 patch");
-        show(bd, 0.5, 0.5, 6);
-        const chipA = mk(p, "chip", `left:${PX}px;top:${PY + N * CS + 26}px;border:1px solid ${rgba(C.conv, 0.6)};`, "Conv1 filter: 11 × 11 × 3");
-        const chipB = mk(p, "chip", `left:${PX + 330}px;top:${PY + N * CS + 26}px;border:1px solid ${rgba(C.conv, 0.6)};`, "Stride: 4");
-        show(chipA, 0.9, 0.5, 8); show(chipB, 1.1, 0.5, 8);
-
-        // three conceptual filters -> three normalised response maps (5x5 positions)
-        const resp = { edge: [], color: [], texture: [] };
-        for (let j = 0; j < 5; j++) for (let i = 0; i < 5; i++) {
-          let e = 0, c = 0, m = 0, m2 = 0;
-          for (let dj = 0; dj < 11; dj++) for (let di = 0; di < 11; di++) {
-            const px = patch[j * 4 + dj][i * 4 + di], u = di / 10 - 0.5, v = dj / 10 - 0.5;
-            e += px.lum * (u - v); c += (px.r - px.b) * (1 - Math.abs(u) - Math.abs(v) * 0.5); m += px.lum; m2 += px.lum * px.lum;
-          }
-          m /= 121; resp.edge.push(e); resp.color.push(c); resp.texture.push(m2 / 121 - m * m);
-        }
-        const norm = (a) => { const lo = Math.min(...a), hi = Math.max(...a); return a.map((v) => (v - lo) / (hi - lo || 1)); };
-        Object.keys(resp).forEach((k) => (resp[k] = norm(resp[k])));
-
-        const drawMap = (parent, vals, cs, x, y, withNum) => {
-          const g = mk(parent, "abs", `left:${x}px;top:${y}px;width:${5 * cs}px;height:${5 * cs}px;`);
-          const cells = vals.map((v, k) => {
-            const c = mk(g, "cell", `left:${(k % 5) * cs}px;top:${Math.floor(k / 5) * cs}px;width:${cs}px;height:${cs}px;background:${rgba(C.conv, 0.08 + 0.5 * v)};border:1px solid rgba(255,255,255,0.1);`);
-            if (withNum) mk(c, "num", `left:0;top:0;width:${cs}px;line-height:${cs}px;font-size:20px;`, v.toFixed(1));
-            return c;
-          });
-          return { g, cells };
-        };
-        const big = drawMap(p, resp.edge, 70, 1080, 290, true);
-        const arrow = mk(p, "abs", "left:800px;top:400px;font-size:60px;color:#6b7890;", "→");
-        const gAll = mk(p, "abs", "left:0;top:0;width:1920px;height:1080px;pointer-events:none;");
-        show(arrow, 0.6, 0.5, 0);
-        big.cells.forEach((c) => (c.style.opacity = 0));
-
-        const win = mk(p, "abs", `left:${PX}px;top:${PY}px;width:${11 * CS}px;height:${11 * CS}px;box-sizing:border-box;border:3px solid ${C.conv};background:${rgba(C.conv, 0.14)};`);
-        show(win, 0.9, 0.4, 0);
-        const T0 = 1.2, DT = 0.14;
-        for (let k = 0; k < 25; k++) {
-          const i = k % 5, j = Math.floor(k / 5), t = T0 + k * DT + (j * 0.0);
-          T.set(win, { x: i * 4 * CS, y: j * 4 * CS }, t);
-          T.fromTo(big.cells[k], { opacity: 0 }, { opacity: 1, duration: 0.18 }, t);
-        }
-        const lbl = mk(p, "lbl", "left:1080px;top:660px;width:350px;color:#9aa8bd;", "One value per position");
-        show(lbl, 3.0, 0.5, 6);
-        caption(p, "A filter scans local regions of the image and responds to a specific visual pattern.", 0.6, 4.5);
-
-        // phase 2: three filters, three feature maps
-        [win, big.g, arrow, lbl].forEach((e) => hide(e, 4.6, 0.5));
-        const names = [["Edge", "edge"], ["Colour", "color"], ["Fine texture", "texture"]];
-        names.forEach(([nm, key], i) => {
-          const x = 1000 + i * 260;
-          const m = drawMap(p, resp[key], 44, x, 330, false);
-          const l = mk(p, "lbl", `left:${x - 10}px;top:570px;width:240px;font-size:22px;color:${C.ink};`, nm);
-          show(m.g, 4.9 + i * 0.3, 0.6, 12); show(l, 5.1 + i * 0.3, 0.5, 8);
-        });
-        const bd2 = mk(p, "badge", "left:1000px;top:640px;", "AlexNet Conv1: 96 learned filters");
-        show(bd2, 6.1, 0.5, 6);
-        caption(p, "One filter produces one feature map. Many filters produce many feature maps.", 4.9);
-      })();
-
-      /* ---------------- Scene 4: pooling ---------------- */
-      (() => {
-        const p = document.getElementById("s4in"); OFF = 21;
-        stepEl(p, "<b>Step 4 of 7</b> · Pooling", 0.4);
-        const M = [[3, 1, 2, 0, 1], [1, 7, 2, 5, 1], [0, 2, 4, 1, 2], [2, 1, 3, 9, 4], [1, 0, 2, 3, 1]];
-        const CS = 100, GX = 260, GY = 200;
-        const grid = mk(p, "abs", `left:${GX}px;top:${GY}px;width:${5 * CS}px;height:${5 * CS}px;`);
-        const cellEls = [];
-        for (let y = 0; y < 5; y++) for (let x = 0; x < 5; x++) {
-          const c = mk(grid, "cell", `left:${x * CS}px;top:${y * CS}px;width:${CS}px;height:${CS}px;background:#0c111c;border:1px solid rgba(255,255,255,0.14);`);
-          mk(c, "num", `left:0;top:0;width:${CS}px;line-height:${CS}px;font-size:34px;`, M[y][x]);
-          cellEls[y * 5 + x] = c;
-        }
-        show(grid, 0.3, 0.8, 0);
-        const bd = mk(p, "badge", `left:${GX}px;top:${GY - 54}px;`, "Conceptual close-up · a 5 × 5 grid of invented values");
-        show(bd, 0.5, 0.5, 6);
-        const OX = 1180, OY = 330, OC = 120;
-        const out = mk(p, "abs", `left:${OX}px;top:${OY}px;width:${2 * OC}px;height:${2 * OC}px;`);
-        const outCells = [];
-        for (let k = 0; k < 4; k++) {
-          const c = mk(out, "cell", `left:${(k % 2) * OC}px;top:${Math.floor(k / 2) * OC}px;width:${OC}px;height:${OC}px;background:#0c111c;border:1px solid rgba(255,255,255,0.14);`);
-          outCells.push(c);
-        }
-        const outLbl = mk(p, "lbl", `left:${OX - 20}px;top:${OY + 2 * OC + 18}px;width:${2 * OC + 40}px;color:#9aa8bd;`, "2 × 2 output");
-        const arrow = mk(p, "abs", "left:900px;top:380px;font-size:60px;color:#6b7890;", "→");
-        show(out, 0.6, 0.6, 0); show(outLbl, 0.8, 0.5, 6); show(arrow, 0.8, 0.5, 0);
-        const chip = mk(p, "chip", `left:${GX}px;top:${GY + 5 * CS + 34}px;border:1px solid ${rgba(C.pool, 0.6)};`, "3 × 3 window · stride 2");
-        show(chip, 0.9, 0.5, 8);
-
-        const win = mk(p, "abs", `left:${GX}px;top:${GY}px;width:${3 * CS}px;height:${3 * CS}px;box-sizing:border-box;border:4px solid ${C.pool};background:${rgba(C.pool, 0.12)};`);
-        show(win, 0.9, 0.4, 0);
-        const band = mk(p, "abs", `left:${GX + 2 * CS}px;top:${GY}px;width:${CS}px;height:${3 * CS}px;box-sizing:border-box;border:3px dashed ${C.dense};`);
-        const bandLbl = mk(p, "lbl", `left:${GX + 300}px;top:${GY + 5 * CS + 34}px;font-size:22px;color:${C.dense};padding-top:8px;`, "Neighbouring windows share a column");
-        const stops = [[0, 0], [2, 0], [0, 2], [2, 2]];
-        stops.forEach(([cx, cy], k) => {
-          const t = 1.2 + k * 1.2;
-          if (k > 0) T.to(win, { x: cx * CS, y: cy * CS, duration: 0.35, ease: "power2.inOut" }, t - 0.4);
-          let best = -1, bi = 0;
-          for (let dy = 0; dy < 3; dy++) for (let dx = 0; dx < 3; dx++) { const v = M[cy + dy][cx + dx]; if (v > best) { best = v; bi = (cy + dy) * 5 + cx + dx; } }
-          T.to(cellEls[bi], { backgroundColor: rgba(C.pool, 0.4), duration: 0.3 }, t);
-          const oc = outCells[k];
-          mk(oc, "num", `left:0;top:0;width:${OC}px;line-height:${OC}px;font-size:44px;color:${C.pool};font-weight:600;`, best);
-          T.fromTo(oc, { backgroundColor: "#0c111c" }, { backgroundColor: rgba(C.pool, 0.22), duration: 0.4 }, t + 0.1);
-          if (k === 1) {
-            T.fromTo(band, { opacity: 0 }, { opacity: 1, duration: 0.4 }, t);
-            T.fromTo(bandLbl, { opacity: 0 }, { opacity: 1, duration: 0.5 }, t + 0.2);
-          }
-        });
-        outCells.forEach((oc, k) => { const n = oc.querySelector(".num"); T.fromTo(n, { opacity: 0 }, { opacity: 1, duration: 0.3 }, 1.3 + k * 1.2); });
-        hide(band, 5.8, 0.4);
-        caption(p, "Max-pooling reduces spatial size and keeps the strongest activation.", 0.6);
-      })();
-
-      /* ---------------- Scene 5: dense layers ---------------- */
-      (() => {
-        const p = document.getElementById("s5in"); OFF = 28;
-        stepEl(p, "<b>Step 6 of 7</b> · Dense layers", 0.4);
-        const cols = [
-          { x: 300, col: C.pool, lab: "Flattened", sub: "6 × 6 × 256" },
-          { x: 760, col: C.dense, lab: "Dense 1 / FC6", sub: "4,096 learned units" },
-          { x: 1160, col: C.dense, lab: "Dense 2 / FC7", sub: "4,096 learned units" },
-          { x: 1560, col: C.dense, lab: "Dense 3 / FC8", sub: "1,000 class scores" },
-        ];
-        const ys = Array.from({ length: 12 }, (_, i) => 150 + i * 42);
-        let svg = `<svg width="1920" height="700" viewBox="0 0 1920 700" style="position:absolute;left:0;top:130px">`;
-        for (let c = 0; c < 3; c++) {
-          svg += `<g id="d5g${c}" opacity="0">`;
-          ys.forEach((y1, a) => ys.forEach((y2, b) => { if ((a * 7 + b * 3) % 3 !== 0) svg += `<line x1="${cols[c].x}" y1="${y1}" x2="${cols[c + 1].x}" y2="${y2}" stroke="${C.dense}" stroke-opacity="0.22" stroke-width="1.5"/>`; }));
-          svg += `</g>`;
-        }
-        cols.forEach((c, ci) => { svg += `<g id="d5c${ci}" opacity="0">` + ys.map((y) => `<circle cx="${c.x}" cy="${y}" r="10" fill="${c.col}"/>`).join("") + `</g>`; });
-        svg += `</svg>`;
-        mk(p, "abs", "left:0;top:0;width:1920px;height:1080px;", svg);
-        cols.forEach((c, ci) => {
-          const t = 0.5 + ci * 1.0;
-          const l = mk(p, "lbl", `left:${c.x - 150}px;top:${130 + 620}px;width:300px;font-size:24px;color:${c.col};font-weight:600;`, c.lab + `<div style="font-size:19px;color:#9aa8bd;font-weight:400;margin-top:6px">${c.sub}</div>`);
-          T.fromTo("#d5c" + ci, { opacity: 0 }, { opacity: 1, duration: 0.6 }, t);
-          show(l, t, 0.6, 8);
-          if (ci < 3) T.fromTo("#d5g" + ci, { opacity: 0 }, { opacity: 1, duration: 0.8 }, t + 0.6);
-        });
-        const bd = mk(p, "badge", "left:1220px;top:130px;", "Representative connections shown");
-        show(bd, 1.6, 0.5, 6);
-        caption(p, "In a dense layer, every neuron is connected to every neuron in the previous layer.", 0.8);
-      })();
-
-      /* ---------------- Scene 6: classification ---------------- */
-      (() => {
-        const p = document.getElementById("s6in"); OFF = 34;
-        stepEl(p, "<b>Step 7 of 7</b> · Classification", 0.4);
-        const dots = Array.from({ length: 12 }, (_, i) => 270 + i * 34);
-        let svg = `<svg width="960" height="800" viewBox="0 0 960 800" style="position:absolute;left:0;top:0"><g id="d6a" opacity="0">` +
-          dots.map((y) => `<circle cx="240" cy="${y}" r="9" fill="${C.dense}"/>`).join("") +
-          dots.map((y) => `<line x1="240" y1="${y}" x2="560" y2="480" stroke="${C.soft}" stroke-width="1.5" stroke-dasharray="3 7" stroke-opacity="0.7"/>`).join("") +
-          `</g><g id="d6b" opacity="0"><line x1="690" y1="480" x2="950" y2="480" stroke="${C.soft}" stroke-width="2" stroke-dasharray="3 7"/></g></svg>`;
-        mk(p, "abs", "left:0;top:0;width:960px;height:800px;", svg);
-        const l0 = mk(p, "lbl", "left:90px;top:700px;width:300px;font-size:22px;color:" + C.dense + ";font-weight:600;", "FC8<div style='font-size:19px;color:#9aa8bd;font-weight:400;margin-top:6px'>1,000 class scores</div>");
-        const blk = mk(p, "abs", `left:560px;top:420px;width:130px;height:120px;border:2px solid ${C.soft};background:${rgba(C.soft, 0.16)};border-radius:8px;text-align:center;line-height:116px;font-size:60px;`, "σ");
-        const l1 = mk(p, "lbl", "left:490px;top:560px;width:270px;font-size:22px;color:" + C.ink + ";font-weight:600;", "Softmax<div style='font-size:19px;color:#9aa8bd;font-weight:400;margin-top:6px'>not a learned layer</div>");
-        T.fromTo("#d6a", { opacity: 0 }, { opacity: 1, duration: 0.7 }, 0.6);
-        show(l0, 0.7, 0.5, 8); show(blk, 1.0, 0.6, 0); show(l1, 1.1, 0.5, 8);
-        T.fromTo("#d6b", { opacity: 0 }, { opacity: 1, duration: 0.5 }, 1.8);
-        const bd = mk(p, "badge", "left:1010px;top:200px;", "Illustrative softmax output");
-        show(bd, 1.9, 0.5, 6);
-        const R = [["dog", 0.72, C.out], ["wolf", 0.11, C.soft], ["fox", 0.06, C.soft], ["cat", 0.04, C.soft], ["rabbit", 0.03, C.soft], ["other 995 classes", 0.04, C.soft]];
-        R.forEach(([nm, pr, col], i) => {
-          const y = 280 + i * 76, t = 2.57 + i * 0.27;
-          const lb = mk(p, "abs", `left:1010px;top:${y}px;width:250px;line-height:36px;font-size:26px;color:${i === 0 ? C.ink : C.dim};`, nm);
-          const bar = mk(p, "abs", `left:1270px;top:${y}px;width:${Math.round(pr * 720)}px;height:36px;border-radius:6px;background:${col};transform-origin:left center;` + (i ? "opacity:0.75;" : ""));
-          const vl = mk(p, "abs", `left:${1270 + Math.round(pr * 720) + 16}px;top:${y}px;line-height:36px;font-size:26px;color:${i === 0 ? C.ink : C.dim};`, pr.toFixed(2));
-          show(lb, t, 0.4, 6);
-          T.fromTo(bar, { scaleX: 0 }, { scaleX: 1, duration: 0.6, ease: "power3.out" }, t);
-          show(vl, t + 0.3, 0.4, 0);
-        });
-        caption(p, "The final fully connected layer produces 1,000 class scores.<br>Softmax then converts these scores into probabilities.", 0.6);
-        p.querySelector(".cap").style.bottom = "80px";
-      })();
-
-      /* ---------------- Scene 7: outro ---------------- */
-      (() => {
-        const p = document.getElementById("s7in"); OFF = 41;
-        const a = mk(p, "abs", "left:160px;width:1600px;top:420px;text-align:center;font-size:64px;font-weight:300;", "Nothing here is a trained model.");
-        const b = mk(p, "abs", "left:160px;width:1600px;top:530px;text-align:center;font-size:36px;font-weight:300;color:" + C.dim + ";", "Every number is there to make the mechanism legible.");
-        show(a, 0.3, 0.7, 12); show(b, 0.9, 0.7, 12);
-        hide(a, 2.5, 0.4); hide(b, 2.5, 0.4);
-        const t1 = mk(p, "abs", "left:160px;width:1600px;top:400px;text-align:center;font-size:150px;font-weight:300;letter-spacing:0.02em;", "AlexNet");
-        const t2 = mk(p, "abs", "left:160px;width:1600px;top:600px;text-align:center;font-size:36px;font-weight:300;color:" + C.dim + ";letter-spacing:0.04em;", "A Guided Journey Through the Architecture");
-        const bar = mk(p, "abs", `left:810px;top:590px;width:300px;height:3px;border-radius:2px;background:linear-gradient(90deg,${C.conv},${C.pool},${C.dense},${C.out});`);
-        show(t1, 3.0, 0.9, 12); show(bar, 3.4, 0.7, 0); show(t2, 3.6, 0.8, 10);
-      })();
-
-      
-      // audio-reactive: music energy (10 Hz RMS envelope) gently breathes block glow
-      const ENV = [0.64, 0.65, 0.67, 0.68, 0.67, 0.68, 0.67, 0.67, 0.64, 0.62, 0.59, 0.58, 0.57, 0.55, 0.47, 0.47, 0.48, 0.53, 0.5, 0.48, 0.44, 0.39, 0.26, 0.16, 0.28, 0.44, 0.57, 0.46, 0.36, 0.28, 0.23, 0.36, 0.54, 0.69, 0.68, 0.63, 0.59, 0.55, 0.51, 0.48, 0.43, 0.36, 0.28, 0.2, 0.13, 0.09, 0.07, 0.07, 0.23, 0.38, 0.5, 0.44, 0.37, 0.34, 0.32, 0.3, 0.39, 0.5, 0.6, 0.59, 0.54, 0.52, 0.5, 0.49, 0.46, 0.4, 0.31, 0.21, 0.15, 0.11, 0.08, 0.06, 0.07, 0.28, 0.47, 0.62, 0.57, 0.53, 0.51, 0.48, 0.46, 0.43, 0.37, 0.3, 0.22, 0.18, 0.15, 0.16, 0.18, 0.34, 0.48, 0.6, 0.58, 0.56, 0.55, 0.55, 0.57, 0.64, 0.69, 0.7, 0.65, 0.6, 0.57, 0.54, 0.54, 0.54, 0.53, 0.52, 0.51, 0.5, 0.48, 0.36, 0.21, 0.1, 0.26, 0.44, 0.58, 0.55, 0.53, 0.5, 0.49, 0.48, 0.45, 0.41, 0.36, 0.29, 0.21, 0.19, 0.22, 0.27, 0.41, 0.5, 0.59, 0.52, 0.49, 0.47, 0.46, 0.42, 0.47, 0.53, 0.59, 0.57, 0.54, 0.51, 0.49, 0.46, 0.51, 0.53, 0.57, 0.54, 0.53, 0.49, 0.38, 0.26, 0.32, 0.44, 0.57, 0.53, 0.48, 0.43, 0.39, 0.4, 0.51, 0.64, 0.71, 0.68, 0.64, 0.6, 0.56, 0.52, 0.45, 0.34, 0.25, 0.21, 0.2, 0.19, 0.15, 0.12, 0.09, 0.29, 0.48, 0.69, 0.67, 0.67, 0.64, 0.62, 0.58, 0.58, 0.59, 0.59, 0.55, 0.51, 0.5, 0.49, 0.47, 0.43, 0.36, 0.27, 0.15, 0.07, 0.03, 0.02, 0.02, 0.06, 0.27, 0.45, 0.61, 0.58, 0.56, 0.54, 0.51, 0.48, 0.44, 0.39, 0.32, 0.26, 0.21, 0.17, 0.15, 0.12, 0.3, 0.46, 0.63, 0.59, 0.56, 0.52, 0.48, 0.51, 0.61, 0.69, 0.68, 0.62, 0.58, 0.54, 0.52, 0.52, 0.52, 0.51, 0.51, 0.52, 0.52, 0.51, 0.45, 0.31, 0.19, 0.3, 0.46, 0.62, 0.57, 0.55, 0.52, 0.49, 0.46, 0.42, 0.4, 0.37, 0.36, 0.34, 0.31, 0.3, 0.25, 0.38, 0.5, 0.67, 0.69, 0.7, 0.7, 0.67, 0.65, 0.66, 0.65, 0.64, 0.6, 0.58, 0.56, 0.53, 0.45, 0.45, 0.46, 0.53, 0.5, 0.47, 0.43, 0.36, 0.25, 0.29, 0.4, 0.54, 0.51, 0.42, 0.32, 0.25, 0.21, 0.38, 0.56, 0.71, 0.68, 0.63, 0.61, 0.61, 0.6, 0.57, 0.47, 0.37, 0.27, 0.19, 0.14, 0.11, 0.1, 0.09, 0.24, 0.38, 0.5, 0.43, 0.36, 0.33, 0.3, 0.29, 0.4, 0.52, 0.61, 0.57, 0.54, 0.52, 0.5, 0.48, 0.44, 0.38, 0.29, 0.21, 0.14, 0.09, 0.07, 0.05, 0.17, 0.38, 0.56, 0.6, 0.55, 0.51, 0.49, 0.46, 0.43, 0.39, 0.32, 0.24, 0.17, 0.14, 0.13, 0.15, 0.19, 0.37, 0.5, 0.61, 0.58, 0.56, 0.55, 0.55, 0.59, 0.65, 0.69, 0.68, 0.64, 0.6, 0.56, 0.53, 0.52, 0.52, 0.51, 0.51, 0.51, 0.5, 0.47, 0.34, 0.2, 0.12, 0.3, 0.47, 0.59, 0.55, 0.53, 0.51, 0.49, 0.47, 0.44, 0.39, 0.31, 0.22, 0.16, 0.17, 0.22, 0.34, 0.48, 0.57, 0.57, 0.5, 0.47, 0.45, 0.44, 0.41, 0.48, 0.53, 0.61, 0.57, 0.54, 0.52, 0.5, 0.48, 0.52, 0.53, 0.57, 0.53, 0.52, 0.48, 0.36, 0.24, 0.3, 0.44, 0.57, 0.52, 0.48, 0.43, 0.36, 0.35, 0.48, 0.64, 0.72, 0.68, 0.64, 0.6, 0.56, 0.52, 0.43, 0.31, 0.22, 0.19, 0.19, 0.17, 0.13, 0.1, 0.08, 0.28, 0.5, 0.69, 0.68, 0.66, 0.63, 0.63, 0.57, 0.6, 0.59, 0.6, 0.54, 0.51, 0.49, 0.48, 0.46, 0.42, 0.34, 0.23, 0.12, 0.05, 0.01, 0.0, 0.03, 0.1, 0.32, 0.48, 0.6, 0.56, 0.54, 0.52, 0.5, 0.47, 0.42, 0.37, 0.3, 0.26, 0.19, 0.17, 0.14, 0.14, 0.32, 0.48, 0.64, 0.61, 0.58, 0.54, 0.51, 0.54, 0.62, 0.69, 0.67, 0.61, 0.57, 0.55, 0.53, 0.52, 0.52, 0.52, 0.52, 0.52, 0.52, 0.5, 0.43, 0.29, 0.22, 0.36, 0.52, 0.62, 0.57, 0.54, 0.52, 0.48, 0.46, 0.42, 0.41, 0.38, 0.37, 0.33, 0.3, 0.29, 0.44, 0.66, 0.85, 0.89, 0.87, 0.84, 0.78, 0.72, 0.67, 0.68, 0.69, 0.7, 0.7, 0.7, 0.7, 0.68, 0.66, 0.65, 0.65, 0.65, 0.63, 0.61, 0.6, 0.59, 0.6, 0.64, 0.65, 0.65, 0.63, 0.61, 0.6, 0.59, 0.6, 0.69, 0.79, 0.86, 0.86, 0.83, 0.79, 0.74, 0.67, 0.62, 0.58, 0.57, 0.55, 0.53, 0.54, 0.54, 0.54, 0.54, 0.58, 0.6, 0.61, 0.57, 0.54, 0.53, 0.51, 0.53, 0.58, 0.63, 0.66, 0.63, 0.62, 0.61, 0.61, 0.6, 0.69, 0.78, 0.88, 0.85, 0.82, 0.75, 0.7, 0.58, 0.57, 0.57, 0.67, 0.69, 0.69, 0.69, 0.66, 0.65, 0.62, 0.59, 0.57, 0.56, 0.56, 0.56, 0.56, 0.56, 0.57, 0.62, 0.65, 0.67, 0.63, 0.63, 0.62, 0.63, 0.68, 0.76, 0.82, 0.85, 0.84, 0.83, 0.77, 0.7, 0.62, 0.59, 0.58, 0.59, 0.59, 0.58, 0.56, 0.53, 0.49, 0.51, 0.6, 0.68, 0.72, 0.71, 0.7, 0.7, 0.69, 0.69, 0.68, 0.67, 0.66, 0.64, 0.64, 0.65, 0.65, 0.68, 0.77, 0.85, 0.88, 0.85, 0.82, 0.75, 0.68, 0.61, 0.61, 0.64, 0.68, 0.67, 0.65, 0.64, 0.64, 0.64, 0.65, 0.64, 0.64, 0.64, 0.64, 0.62, 0.59, 0.57, 0.6, 0.63, 0.65, 0.63, 0.61, 0.6, 0.58, 0.59, 0.68, 0.77, 0.85, 0.85, 0.83, 0.79, 0.74, 0.66, 0.58, 0.51, 0.5, 0.5, 0.51, 0.51, 0.5, 0.5, 0.47, 0.56, 0.65, 0.75, 0.75, 0.73, 0.73, 0.7, 0.69, 0.7, 0.7, 0.7, 0.69, 0.68, 0.68, 0.68, 0.68, 0.75, 0.8, 0.88, 0.85, 0.84, 0.79, 0.73, 0.66, 0.64, 0.64, 0.67, 0.67, 0.68, 0.68, 0.66, 0.65, 0.63, 0.62, 0.61, 0.61, 0.61, 0.62, 0.61, 0.62, 0.62, 0.65, 0.67, 0.7, 0.67, 0.64, 0.63, 0.62, 0.68, 0.75, 0.84, 0.87, 0.85, 0.82, 0.78, 0.71, 0.65, 0.62, 0.62, 0.64, 0.63, 0.64, 0.61, 0.6, 0.56, 0.59, 0.62, 0.65, 0.65, 0.64, 0.64, 0.63, 0.62, 0.61, 0.6, 0.6, 0.6, 0.6, 0.58, 0.58, 0.57, 0.65, 0.76, 0.86, 0.89, 0.84, 0.82, 0.75, 0.73, 0.68, 0.69, 0.69, 0.7, 0.69, 0.69, 0.69, 0.68, 0.66, 0.67, 0.65, 0.64, 0.61, 0.61, 0.61, 0.61, 0.61, 0.64, 0.65, 0.65, 0.63, 0.62, 0.6, 0.58, 0.6, 0.7, 0.8, 0.87, 0.86, 0.83, 0.79, 0.73, 0.68, 0.61, 0.57, 0.55, 0.55, 0.55, 0.55, 0.54, 0.54, 0.55, 0.58, 0.6, 0.6, 0.56, 0.54, 0.55, 0.54, 0.54, 0.59, 0.63, 0.66, 0.64, 0.62, 0.61, 0.6, 0.61, 0.71, 0.81, 0.88, 0.84, 0.8, 0.75, 0.69, 0.58, 0.57, 0.58, 0.64, 0.62, 0.61, 0.61, 0.59, 0.57, 0.56, 0.55, 0.55, 0.54, 0.53, 0.52, 0.52, 0.53, 0.54, 0.6, 0.62, 0.65, 0.62, 0.63, 0.63, 0.64, 0.69, 0.77, 0.83, 0.86, 0.83, 0.83, 0.75, 0.68, 0.61, 0.59, 0.59, 0.6, 0.61, 0.61, 0.61, 0.59, 0.58, 0.59, 0.64, 0.67, 0.7, 0.7, 0.7, 0.7, 0.7, 0.68, 0.68, 0.68, 0.69, 0.71, 0.72, 0.73, 0.72, 0.75, 0.81, 0.87, 0.89, 0.84, 0.8, 0.73, 0.69, 0.63, 0.64, 0.67, 0.69, 0.69, 0.68, 0.67, 0.65, 0.66, 0.66, 0.67, 0.65, 0.64, 0.63, 0.62, 0.59, 0.59, 0.61, 0.64, 0.65, 0.63, 0.61, 0.59, 0.59, 0.61, 0.71, 0.8, 0.88, 0.87, 0.82, 0.79, 0.73, 0.68, 0.6, 0.56, 0.55, 0.56, 0.55, 0.55, 0.55, 0.56, 0.6, 0.68, 0.76, 0.81, 0.8, 0.79, 0.77, 0.76, 0.75, 0.74, 0.74, 0.72, 0.71, 0.7, 0.7, 0.7, 0.71, 0.78, 0.84, 0.88, 0.86, 0.83, 0.79, 0.71, 0.65, 0.65, 0.68, 0.72, 0.71, 0.72, 0.7, 0.7, 0.7, 0.72, 0.72, 0.69, 0.66, 0.63, 0.64, 0.62, 0.62, 0.65, 0.71, 0.75, 0.74, 0.71, 0.67, 0.62, 0.56, 0.62, 0.71, 0.8, 0.8, 0.77, 0.77, 0.75, 0.76, 0.74, 0.73, 0.68, 0.64, 0.58, 0.55, 0.55, 0.55, 0.57, 0.57, 0.59, 0.61, 0.61, 0.61, 0.59, 0.58, 0.56, 0.57, 0.56, 0.58, 0.56, 0.56, 0.54, 0.53, 0.52, 0.62, 0.76, 0.88, 0.9, 0.88, 0.86, 0.84, 0.81, 0.82, 0.81, 0.81, 0.81, 0.81, 0.78, 0.71, 0.58, 0.43, 0.41, 0.42, 0.46, 0.44, 0.44, 0.43, 0.41, 0.43, 0.52, 0.59, 0.61, 0.56, 0.52, 0.49, 0.46, 0.51, 0.67, 0.82, 0.91, 0.89, 0.86, 0.8, 0.72, 0.66, 0.6, 0.57, 0.56, 0.55, 0.52, 0.43, 0.29, 0.19, 0.26, 0.37, 0.47, 0.45, 0.44, 0.42, 0.38, 0.34, 0.38, 0.51, 0.64, 0.7, 0.67, 0.65, 0.64, 0.62, 0.63, 0.73, 0.83, 0.91, 0.88, 0.82, 0.75, 0.65, 0.59, 0.55, 0.54, 0.57, 0.57, 0.57, 0.56, 0.55, 0.54, 0.59, 0.66, 0.74, 0.75, 0.74, 0.73, 0.73, 0.73, 0.73, 0.72, 0.71, 0.71, 0.71, 0.72, 0.72, 0.72, 0.76, 0.84, 0.9, 0.91, 0.85, 0.8, 0.74, 0.66, 0.58, 0.55, 0.59, 0.64, 0.66, 0.66, 0.65, 0.65, 0.67, 0.72, 0.76, 0.78, 0.77, 0.78, 0.8, 0.79, 0.77, 0.75, 0.74, 0.75, 0.76, 0.77, 0.76, 0.76, 0.75, 0.78, 0.83, 0.89, 0.89, 0.87, 0.81, 0.76, 0.71, 0.69, 0.7, 0.71, 0.72, 0.71, 0.72, 0.72, 0.74, 0.74, 0.72, 0.69, 0.63, 0.58, 0.55, 0.54, 0.52, 0.47, 0.48, 0.51, 0.57, 0.56, 0.55, 0.54, 0.52, 0.56, 0.72, 0.88, 0.94, 0.91, 0.85, 0.8, 0.72, 0.67, 0.64, 0.62, 0.62, 0.59, 0.45, 0.3, 0.19, 0.18, 0.35, 0.56, 0.78, 0.82, 0.81, 0.79, 0.76, 0.77, 0.78, 0.79, 0.79, 0.79, 0.79, 0.78, 0.78, 0.78, 0.79, 0.84, 0.86, 0.91, 0.86, 0.83, 0.75, 0.73, 0.72, 0.73, 0.71, 0.68, 0.63, 0.57, 0.54, 0.51, 0.52, 0.6, 0.72, 0.79, 0.78, 0.76, 0.78, 0.77, 0.75, 0.75, 0.77, 0.75, 0.75, 0.75, 0.76, 0.74, 0.75, 0.79, 0.85, 0.88, 0.88, 0.84, 0.81, 0.75, 0.72, 0.68, 0.69, 0.72, 0.76, 0.75, 0.73, 0.73, 0.74, 0.73, 0.74, 0.75, 0.78, 0.78, 0.78, 0.77, 0.79, 0.78, 0.76, 0.75, 0.74, 0.76, 0.75, 0.78, 0.76, 0.76, 0.78, 0.84, 0.89, 0.89, 0.86, 0.8, 0.77, 0.72, 0.74, 0.73, 0.75, 0.75, 0.75, 0.74, 0.74, 0.73, 0.72, 0.71, 0.65, 0.57, 0.47, 0.39, 0.34, 0.3, 0.38, 0.49, 0.6, 0.6, 0.57, 0.55, 0.53, 0.51, 0.58, 0.72, 0.86, 0.92, 0.9, 0.83, 0.77, 0.68, 0.62, 0.56, 0.53, 0.53, 0.53, 0.52, 0.46, 0.34, 0.24, 0.3, 0.4, 0.5, 0.46, 0.44, 0.41, 0.4, 0.37, 0.45, 0.56, 0.66, 0.67, 0.64, 0.62, 0.61, 0.61, 0.64, 0.76, 0.84, 0.92, 0.86, 0.81, 0.73, 0.65, 0.59, 0.56, 0.56, 0.57, 0.54, 0.53, 0.52, 0.52, 0.52, 0.6, 0.69, 0.77, 0.77, 0.76, 0.76, 0.75, 0.75, 0.73, 0.72, 0.71, 0.7, 0.71, 0.71, 0.7, 0.7, 0.76, 0.83, 0.89, 0.87, 0.83, 0.78, 0.71, 0.59, 0.5, 0.51, 0.6, 0.65, 0.66, 0.65, 0.64, 0.64, 0.65, 0.72, 0.74, 0.78, 0.75, 0.79, 0.77, 0.78, 0.76, 0.76, 0.74, 0.73, 0.74, 0.73, 0.74, 0.74, 0.74, 0.8, 0.84, 0.9, 0.89, 0.85, 0.78, 0.71, 0.69, 0.69, 0.7, 0.7, 0.72, 0.73, 0.73, 0.74, 0.74, 0.71, 0.69, 0.67, 0.66, 0.62, 0.59, 0.55, 0.52, 0.49, 0.5, 0.55, 0.58, 0.57, 0.55, 0.54, 0.52, 0.59, 0.73, 0.87, 0.92, 0.88, 0.82, 0.75, 0.68, 0.62, 0.58, 0.57, 0.58, 0.57, 0.55, 0.53, 0.45, 0.35, 0.42, 0.59, 0.78, 0.79, 0.75, 0.74, 0.76, 0.75, 0.74, 0.75, 0.78, 0.78, 0.76, 0.76, 0.76, 0.76, 0.76, 0.82, 0.87, 0.92, 0.87, 0.81, 0.75, 0.75, 0.75, 0.76, 0.73, 0.68, 0.61, 0.56, 0.51, 0.48, 0.48, 0.6, 0.72, 0.81, 0.79, 0.79, 0.78, 0.79, 0.77, 0.77, 0.77, 0.76, 0.76, 0.77, 0.77, 0.76, 0.76, 0.81, 0.87, 0.9, 0.88, 0.85, 0.82, 0.79, 0.76, 0.75, 0.74, 0.75, 0.75, 0.77, 0.75, 0.76, 0.77, 0.76, 0.75, 0.74, 0.76, 0.76, 0.75, 0.74, 0.73, 0.73, 0.75, 0.76, 0.8, 0.78, 0.76, 0.75, 0.75, 0.74, 0.8, 0.84, 0.89, 0.89, 0.84, 0.8, 0.74, 0.72, 0.69, 0.69, 0.7, 0.71, 0.71, 0.72, 0.71, 0.68, 0.65, 0.61, 0.55, 0.48, 0.41, 0.36, 0.31, 0.28, 0.37, 0.48, 0.6, 0.6, 0.58, 0.55, 0.53, 0.52, 0.61, 0.76, 0.88, 0.93, 0.88, 0.83, 0.76, 0.69, 0.63, 0.57, 0.55, 0.55, 0.55, 0.49, 0.39, 0.29, 0.25, 0.34, 0.4, 0.45, 0.41, 0.39, 0.36, 0.33, 0.3, 0.4, 0.53, 0.66, 0.65, 0.63, 0.61, 0.6, 0.59, 0.65, 0.77, 0.89, 0.91, 0.87, 0.81, 0.73, 0.65, 0.59, 0.56, 0.56, 0.55, 0.54, 0.53, 0.52, 0.51, 0.54, 0.61, 0.73, 0.79, 0.81, 0.79, 0.79, 0.79, 0.79, 0.78, 0.78, 0.78, 0.77, 0.76, 0.76, 0.75, 0.75, 0.81, 0.85, 0.89, 0.87, 0.84, 0.78, 0.72, 0.65, 0.59, 0.58, 0.61, 0.64, 0.63, 0.63, 0.63, 0.62, 0.65, 0.7, 0.74, 0.75, 0.75, 0.76, 0.76, 0.73, 0.73, 0.74, 0.77, 0.77, 0.76, 0.75, 0.75, 0.76, 0.76, 0.81, 0.85, 0.89, 0.89, 0.84, 0.78, 0.71, 0.69, 0.7, 0.71, 0.72, 0.73, 0.74, 0.73, 0.74, 0.74, 0.74, 0.72, 0.68, 0.63, 0.58, 0.55, 0.53, 0.47, 0.45, 0.47, 0.54, 0.57, 0.55, 0.54, 0.52, 0.54, 0.63, 0.78, 0.87, 0.91, 0.86, 0.82, 0.74, 0.69, 0.66, 0.64, 0.63, 0.63, 0.58, 0.43, 0.28, 0.17, 0.25, 0.43, 0.66, 0.77, 0.76, 0.72, 0.72, 0.73, 0.74, 0.74, 0.75, 0.77, 0.76, 0.75, 0.75, 0.76, 0.75, 0.77, 0.82, 0.88, 0.89, 0.86, 0.79, 0.74, 0.68, 0.67, 0.67, 0.7, 0.7, 0.72, 0.72, 0.72, 0.72, 0.73, 0.75, 0.77, 0.78, 0.78, 0.78, 0.78, 0.78, 0.77, 0.78, 0.78, 0.76, 0.75, 0.74, 0.74, 0.73, 0.74, 0.81, 0.85, 0.88, 0.87, 0.84, 0.8, 0.75, 0.72, 0.68, 0.69, 0.72, 0.76, 0.8, 0.81, 0.8, 0.76, 0.76, 0.77, 0.8, 0.81, 0.82, 0.81, 0.79, 0.78, 0.78, 0.75, 0.75, 0.75, 0.77, 0.77, 0.78, 0.77, 0.76, 0.8, 0.84, 0.92, 0.9, 0.87, 0.82, 0.78, 0.77, 0.76, 0.76, 0.76, 0.77, 0.79, 0.79, 0.78, 0.78, 0.77, 0.75, 0.68, 0.59, 0.47, 0.35, 0.25, 0.18, 0.35, 0.5, 0.67, 0.62, 0.61, 0.58, 0.56, 0.55, 0.64, 0.77, 0.87, 0.9, 0.85, 0.82, 0.76, 0.71, 0.66, 0.61, 0.61, 0.58, 0.6, 0.58, 0.6, 0.51, 0.45, 0.45, 0.51, 0.56, 0.52, 0.48, 0.47, 0.42, 0.35, 0.44, 0.56, 0.7, 0.67, 0.66, 0.65, 0.64, 0.63, 0.7, 0.8, 0.9, 0.91, 0.87, 0.8, 0.7, 0.61, 0.57, 0.56, 0.58, 0.56, 0.54, 0.53, 0.52, 0.49, 0.52, 0.61, 0.75, 0.83, 0.83, 0.81, 0.81, 0.82, 0.83, 0.82, 0.81, 0.81, 0.81, 0.81, 0.81, 0.8, 0.79, 0.83, 0.86, 0.89, 0.88, 0.83, 0.77, 0.68, 0.63, 0.58, 0.55, 0.54, 0.54, 0.53, 0.5, 0.46, 0.42, 0.45, 0.56, 0.7, 0.78, 0.78, 0.79, 0.79, 0.79, 0.79, 0.77, 0.75, 0.74, 0.77, 0.78, 0.78, 0.77, 0.78, 0.83, 0.87, 0.92, 0.87, 0.84, 0.77, 0.74, 0.71, 0.71, 0.71, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.72, 0.71, 0.71, 0.69, 0.69, 0.66, 0.62, 0.58, 0.57, 0.58, 0.59, 0.58, 0.57, 0.55, 0.53, 0.54, 0.65, 0.79, 0.89, 0.89, 0.86, 0.81, 0.76, 0.7, 0.66, 0.63, 0.65, 0.63, 0.56, 0.41, 0.29, 0.23, 0.33, 0.51, 0.7, 0.79, 0.79, 0.78, 0.77, 0.78, 0.78, 0.79, 0.79, 0.79, 0.8, 0.8, 0.8, 0.79, 0.8, 0.84, 0.87, 0.9, 0.89, 0.86, 0.82, 0.77, 0.74, 0.72, 0.7, 0.67, 0.64, 0.61, 0.6, 0.56, 0.51, 0.55, 0.68, 0.8, 0.83, 0.81, 0.81, 0.8, 0.79, 0.79, 0.78, 0.79, 0.79, 0.79, 0.78, 0.77, 0.75, 0.77, 0.83, 0.87, 0.89, 0.87, 0.82, 0.78, 0.76, 0.76, 0.77, 0.77, 0.78, 0.78, 0.79, 0.79, 0.8, 0.78, 0.79, 0.78, 0.8, 0.8, 0.8, 0.8, 0.8, 0.78, 0.77, 0.76, 0.8, 0.79, 0.8, 0.77, 0.78, 0.77, 0.76, 0.81, 0.87, 0.93, 0.88, 0.83, 0.75, 0.71, 0.66, 0.65, 0.63, 0.63, 0.63, 0.62, 0.6, 0.55, 0.49, 0.49, 0.51, 0.56, 0.55, 0.53, 0.49, 0.43, 0.32, 0.34, 0.42, 0.54, 0.52, 0.47, 0.41, 0.35, 0.35, 0.52, 0.74, 0.9, 0.91, 0.87, 0.8, 0.71, 0.6, 0.5, 0.42, 0.36, 0.28, 0.18, 0.12, 0.1, 0.1, 0.14, 0.29, 0.42, 0.49, 0.43, 0.39, 0.38, 0.37, 0.37, 0.44, 0.51, 0.57, 0.55, 0.52, 0.51, 0.49, 0.47, 0.61, 0.75, 0.91, 0.91, 0.87, 0.78, 0.66, 0.49, 0.42, 0.44, 0.54, 0.56, 0.52, 0.49, 0.46, 0.45, 0.44, 0.41, 0.37, 0.3, 0.24, 0.2, 0.19, 0.18, 0.2, 0.34, 0.47, 0.59, 0.56, 0.57, 0.57, 0.59, 0.63, 0.74, 0.84, 0.9, 0.88, 0.83, 0.76, 0.69, 0.64, 0.6, 0.57, 0.56, 0.56, 0.55, 0.52, 0.4, 0.25, 0.24, 0.37, 0.53, 0.58, 0.56, 0.55, 0.54, 0.54, 0.53, 0.48, 0.43, 0.4, 0.39, 0.35, 0.31, 0.24, 0.39, 0.61, 0.85, 0.92, 0.87, 0.81, 0.72, 0.63, 0.57, 0.57, 0.6, 0.63, 0.62, 0.61, 0.6, 0.58, 0.56, 0.57, 0.56, 0.55, 0.53, 0.49, 0.45, 0.37, 0.29, 0.37, 0.47, 0.58, 0.55, 0.54, 0.51, 0.48, 0.46, 0.57, 0.73, 0.88, 0.9, 0.87, 0.81, 0.73, 0.63, 0.5, 0.38, 0.31, 0.29, 0.27, 0.26, 0.25, 0.23, 0.29, 0.45, 0.62, 0.7, 0.68, 0.67, 0.65, 0.64, 0.62, 0.63, 0.62, 0.63, 0.62, 0.63, 0.61, 0.59, 0.58, 0.7, 0.81, 0.92, 0.91, 0.85, 0.77, 0.67, 0.59, 0.55, 0.56, 0.6, 0.61, 0.6, 0.59, 0.58, 0.55, 0.52, 0.5, 0.48, 0.45, 0.43, 0.42, 0.41, 0.4, 0.43, 0.48, 0.51, 0.52, 0.51, 0.52, 0.51, 0.5, 0.57, 0.72, 0.84, 0.92, 0.88, 0.82, 0.75, 0.67, 0.64, 0.58, 0.57, 0.55, 0.55, 0.53, 0.53, 0.49, 0.4, 0.41, 0.48, 0.59, 0.59, 0.57, 0.56, 0.56, 0.57, 0.56, 0.53, 0.48, 0.45, 0.43, 0.43, 0.43, 0.43, 0.54, 0.72, 0.88, 0.92, 0.88, 0.82, 0.74, 0.67, 0.61, 0.59, 0.58, 0.59, 0.58, 0.58, 0.57, 0.56, 0.53, 0.53, 0.54, 0.56, 0.55, 0.53, 0.51, 0.47, 0.39, 0.44, 0.49, 0.58, 0.53, 0.48, 0.43, 0.37, 0.38, 0.54, 0.75, 0.89, 0.9, 0.86, 0.8, 0.7, 0.61, 0.52, 0.42, 0.31, 0.22, 0.16, 0.13, 0.12, 0.12, 0.14, 0.31, 0.44, 0.55, 0.51, 0.5, 0.49, 0.47, 0.45, 0.5, 0.54, 0.59, 0.56, 0.55, 0.53, 0.51, 0.53, 0.66, 0.8, 0.91, 0.91, 0.83, 0.74, 0.61, 0.44, 0.4, 0.4, 0.52, 0.53, 0.52, 0.51, 0.52, 0.52, 0.5, 0.45, 0.38, 0.32, 0.26, 0.24, 0.23, 0.21, 0.29, 0.43, 0.55, 0.59, 0.56, 0.57, 0.56, 0.58, 0.63, 0.77, 0.85, 0.91, 0.86, 0.82, 0.74, 0.68, 0.63, 0.59, 0.57, 0.56, 0.56, 0.55, 0.53, 0.44, 0.33, 0.34, 0.44, 0.56, 0.57, 0.57, 0.55, 0.56, 0.55, 0.53, 0.47, 0.44, 0.41, 0.38, 0.34, 0.31, 0.29, 0.46, 0.66, 0.9, 0.91, 0.88, 0.81, 0.74, 0.64, 0.59, 0.57, 0.59, 0.6, 0.6, 0.58, 0.56, 0.54, 0.55, 0.55, 0.56, 0.55, 0.53, 0.48, 0.42, 0.34, 0.28, 0.36, 0.47, 0.57, 0.56, 0.54, 0.52, 0.48, 0.47, 0.61, 0.76, 0.9, 0.9, 0.86, 0.8, 0.7, 0.61, 0.49, 0.39, 0.32, 0.31, 0.29, 0.27, 0.26, 0.23, 0.31, 0.47, 0.67, 0.73, 0.73, 0.69, 0.69, 0.66, 0.64, 0.63, 0.62, 0.61, 0.59, 0.59, 0.56, 0.53, 0.54, 0.68, 0.82, 0.93, 0.91, 0.85, 0.76, 0.63, 0.47, 0.45, 0.47, 0.58, 0.56, 0.54, 0.53, 0.51, 0.48, 0.52, 0.56, 0.57, 0.49, 0.4, 0.32, 0.25, 0.18, 0.36, 0.61, 0.89, 0.92, 0.88, 0.81, 0.72, 0.65, 0.65, 0.69, 0.73, 0.72, 0.69, 0.69, 0.68, 0.65, 0.61, 0.55, 0.5, 0.49, 0.49, 0.5, 0.5, 0.52, 0.47, 0.49, 0.48, 0.56, 0.55, 0.56, 0.54, 0.54, 0.51, 0.55, 0.58, 0.62, 0.6, 0.59, 0.59, 0.59, 0.56, 0.64, 0.77, 0.9, 0.9, 0.88, 0.79, 0.76, 0.7, 0.72, 0.71, 0.72, 0.74, 0.75, 0.76, 0.76, 0.76, 0.77, 0.74, 0.69, 0.61, 0.53, 0.47, 0.43, 0.4, 0.41, 0.49, 0.53, 0.55, 0.5, 0.48, 0.47, 0.47, 0.54, 0.7, 0.85, 0.91, 0.91, 0.85, 0.78, 0.67, 0.59, 0.49, 0.4, 0.35, 0.31, 0.28, 0.24, 0.26, 0.29, 0.42, 0.48, 0.51, 0.44, 0.42, 0.42, 0.41, 0.41, 0.44, 0.5, 0.52, 0.52, 0.5, 0.51, 0.51, 0.49, 0.53, 0.7, 0.83, 0.95, 0.9, 0.84, 0.74, 0.63, 0.54, 0.49, 0.46, 0.45, 0.4, 0.37, 0.36, 0.36, 0.39, 0.5, 0.61, 0.71, 0.72, 0.71, 0.7, 0.7, 0.7, 0.72, 0.74, 0.76, 0.74, 0.73, 0.72, 0.73, 0.72, 0.76, 0.81, 0.88, 0.89, 0.86, 0.82, 0.73, 0.62, 0.54, 0.52, 0.54, 0.55, 0.54, 0.54, 0.55, 0.56, 0.59, 0.63, 0.71, 0.75, 0.78, 0.76, 0.75, 0.72, 0.71, 0.71, 0.73, 0.73, 0.73, 0.71, 0.7, 0.7, 0.7, 0.77, 0.83, 0.91, 0.91, 0.89, 0.81, 0.72, 0.66, 0.65, 0.66, 0.67, 0.68];
-      ENV.forEach((v, i) => { if (i % 1 === 0) tl.set(".glow", { opacity: 0.08 + v * 0.4 }, i * 0.1); });
-
-
+      // outro
+      tl.fromTo("#outro", { opacity: 0 }, { opacity: 1, duration: 0.55, ease: "power2.inOut" }, 22.37);
+      tl.fromTo("#o-name", { opacity: 0, y: 30, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power3.out" }, 22.93); // beat-locked: 22.93s
+      tl.fromTo("#o-sub", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 23.25);
+      tl.fromTo("#o-bar i", { scaleX: 0 }, { scaleX: 1, duration: 0.4, stagger: 0.07, ease: "power2.out" }, 23.45);
+      tl.fromTo("#o-note", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" }, 23.7);
       window.__timelines["main"] = tl;
     </script>
   </body>

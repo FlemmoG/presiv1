@@ -1,2 +1,1 @@
-Introducing AlexNet: A Guided Journey — an interactive 3D tour that shows how a neural network turns an image into "dog, 72%", with no math required.
-Built with React, Three.js and Vite.
+AlexNet: A Guided Journey. An interactive 3D tour of how a neural network turns pixels into "dog, 0.72", no math required. This clip is the actual app, recorded as it runs.
